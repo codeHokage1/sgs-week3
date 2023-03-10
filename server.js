@@ -4,9 +4,10 @@ require('dotenv').config();
 // import internal and external modules
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
+const attendeesRoutes = require('./routes/attendeesRoutes');
 const eventsRoutes = require('./routes/eventsRoutes');
 const connectDB = require('./config/dbConfig');
-const authenticate = require('./middlewares/authenticate')
+const authenticate = require('./middlewares/authenticate');
 
 
 // create express app
@@ -15,12 +16,14 @@ const app = express();
 // set up middlewares
 app.use(express.json());
 app.use(cookieParser())
+
 // set up routes
 app.get('/', (req, res) => {
     res.send('Welcome to the Event Management API');
 });
-app.use('/auth', authRoutes);
-app.use('/events', authenticate, eventsRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/events', authenticate, eventsRoutes);
+app.use('/api/v1/attendees', authenticate, attendeesRoutes);
 
 
 // start app
