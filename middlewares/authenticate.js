@@ -6,8 +6,6 @@ const authenticate = (req, res, next) => {
     if (!authToken) {
         return res.status(401).send("Kindly log in")
     }
-
-    console.log(authToken)
     jwt.verify(
         authToken,
         process.env.AUTH_SECRET_KEY,
@@ -15,7 +13,7 @@ const authenticate = (req, res, next) => {
             if (err) {
                 return res.status(401).send("Kindly log in")
             }
-            console.log(decoded)
+            // console.log(decoded)
             next();
         }
     )

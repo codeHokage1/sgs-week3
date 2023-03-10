@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const attendeeSchema = new mongoose.Schema({
-    attendeeId: {
-        type: String,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -14,7 +10,7 @@ const attendeeSchema = new mongoose.Schema({
         required: true
     },
     eventsIds : [{
-        type: String,
+        type: String
     }]
 })
 

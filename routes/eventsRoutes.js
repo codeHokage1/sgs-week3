@@ -6,6 +6,7 @@ const eventsController = require('../controllers/eventsController');
 
 eventRouter
         .get('/', eventsController.getAllEvents)
+        .post('/', eventsController.createEvent)
         .get('/:eventId', eventsController.getOneEvent)
         .get('/:eventId/attendees', eventsController.getAttendeesOfOneEvent)
         .post('/:eventId/attendees', eventsController.createNewAttendeeForOneEvent)
