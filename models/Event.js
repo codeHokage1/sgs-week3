@@ -20,6 +20,10 @@ const eventSchema = new mongoose.Schema({
     isDone: {
         type: Boolean,
         default: false
+    },
+    attendeesCount : {
+        type: Number,
+        default: 0
     }
 })
 

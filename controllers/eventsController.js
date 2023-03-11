@@ -9,7 +9,7 @@ exports.createEvent = async (req, res) => {
 
     try {
         const newEvent = await Event.create({name, date, location, description});
-        res.status(201).json({"message": "Event created successfully", event: {newEvent, attendees: []}});
+        res.status(201).json({"message": "Event created successfully", event: {...newEvent._doc, attendees: []}});
     } catch (error) {
         console.log(error);
         res.status(500).json({error: error.message});

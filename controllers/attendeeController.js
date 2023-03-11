@@ -42,6 +42,11 @@ exports.createAttendeeForEvent = async (req, res) => {
             email, 
             eventsIds: [foundEvent._id]
         });
+
+        // increase the attendees count in event
+        foundEvent.attendeesCount++;
+        foundEvent.save();
+
         res.status(201).json({
             "message": "Attendee created successfully",
             attendee: newAttendee
@@ -150,6 +155,10 @@ exports.deleteOneAttendeeFromOneEvent = async(req, res) => {
         //delete attendee from that event
         foundAttendee.eventsIds = foundAttendee.eventsIds.map(oneEventId => oneEventId !== eventId)
         foundAttendee.save();
+
+        // decrease the attendees count in event
+        foundEvent.attendeesCount--;
+        foundEvent.save();
 
         res.json({
             message: "Attendee successfully removed from event"
