@@ -74,7 +74,8 @@ eventsIds : [{
 
 ## API Endpoints
 1. **Users**
-NOTE: that no 2 users are allowed to have the same email address
+
+    *NOTE*: that no 2 users are allowed to have the same email address
 ```
 POST /api/v1/auth/register  - Create a new user
 {
@@ -92,7 +93,8 @@ POST /api/v1/auth/logout    - Logout a user
 ```
 
 2. **Events**
-NOTE: that these routes are protected and can only be accessed when a user is logged in
+
+    *NOTE*: that these routes are protected and can only be accessed when a user is logged in
 ```
 POST /api/v1/events         -  Create a new event
 {
@@ -125,7 +127,8 @@ DELETE /events/:eventId/attendees/:attendeeId - Delete an attendee from a partic
 ```
 
 3. **Attendees:**
-NOTE: that these routes are protected and can only be accessed when a user is logged in
+
+    *NOTE*: that these routes are protected and can only be accessed when a user is logged in
 ```
 GET /api/v1/attendees   - Get all attendees create by a user with a list of events they are attending
 ```
