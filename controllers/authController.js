@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const emailSender = require('../config/emailConfig');
 
 // import modules
 const bcrypt = require('bcrypt');
@@ -17,8 +18,15 @@ exports.registerUser = async(req, res) => {
             return res.status(400).json({error: `User with email ${email} already exists`});
         }
         const newUser = await User.create({email, password: await bcrypt.hash(password, 10)});
+
+        const htmlMessage = `
+        <h1>Welcome ${newUser.email}!</h1>
+        <p>This is the SGS Week 3 Task on Event Management API</p>
+        `
+        const emailInfo = emailSender(htmlMessage, newUser.email);
         res.status(201).json({
             message: 'User created successfully',
+            emailInfo,
             newUser
         });
 
