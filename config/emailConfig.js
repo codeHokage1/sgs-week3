@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const emailSender  = async (htmlMessage, receiverEmailAddress) => {
+const emailSender  = async (emailSubject, htmlMessage, receiverEmailAddress) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
@@ -15,13 +15,13 @@ const emailSender  = async (htmlMessage, receiverEmailAddress) => {
         const mailOptions = {
             from: `Sodiq Farhan <farhan@sgs.com>`,
             to: receiverEmailAddress,
-            subject: 'SGS - Event Management API',
+            subject: emailSubject,
             html: htmlMessage
         }
 
         const deliveryInfo = await transporter.sendMail(mailOptions);
-        console.log(`Email sent: ${deliveryInfo}`);
-        return deliveryInfo;
+        console.log(`Email sent: ${deliveryInfo.accepted}`);
+        return deliveryInfo.accepted;
     } catch (error) {
         console.log(`Failed to send email: ${error}`)
     }

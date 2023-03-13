@@ -1,6 +1,8 @@
 const Attendee = require('../models/Attendee');
 const Event = require('../models/Event');
 
+const emailSender = require('../config/emailConfig');
+
 exports.getAllAttendees = async(req, res) => {
     try {
         const attendees = await Attendee.find({});
@@ -30,8 +32,21 @@ exports.createAttendeeForEvent = async (req, res) => {
             foundAttendee.eventsIds.push(req.params.eventId)
             foundAttendee.save();
 
+            const htmlMessage = `
+                <h1>Hey ${foundAttendee.name}!</h1>
+                <pYou have been added an event! See the event details below:</p>
+                <p>Event: ${foundEvent.name}</p>
+                <p>Description: ${foundEvent.description}</p>
+                <p>Location: ${foundEvent.location}</p>
+                <p>Date: ${foundEvent.date}</p>
+                <p>See you there!</p>
+            `
+            const emailInfo = await emailSender("Event Managent - You are added to an event", htmlMessage, newUser.email);
+
+
             return res.status(201).json({
                 "message": "Attendee created successfully",
+                emailInfo : emailInfo.length ? "New Attendeee Notice email sent!" : "Problem sending email. Kindly contact admin",
                 attendee: foundAttendee
             })
         }
@@ -47,8 +62,20 @@ exports.createAttendeeForEvent = async (req, res) => {
         foundEvent.attendeesCount++;
         foundEvent.save();
 
+        const htmlMessage = `
+            <h1>Hey ${newAttendee.name}!</h1>
+            <pYou have been added an event! See the event details below:</p>
+            <p>Event: ${foundEvent.name}</p>
+            <p>Description: ${foundEvent.description}</p>
+            <p>Location: ${foundEvent.location}</p>
+            <p>Date: ${foundEvent.date}</p>
+            <p>See you there!</p>
+        `
+        const emailInfo = await emailSender("Event Managent - You are added to an event", htmlMessage, newUser.email);
+
         res.status(201).json({
             "message": "Attendee created successfully",
+            emailInfo : emailInfo.length ? "Welcome email sent!" : "Problem sending email. Kindly contact admin",
             attendee: newAttendee
         })
 
@@ -160,8 +187,20 @@ exports.deleteOneAttendeeFromOneEvent = async(req, res) => {
         foundEvent.attendeesCount--;
         foundEvent.save();
 
+        const htmlMessage = `
+            <h1>Hey ${foundAttendee.name}!</h1>
+            <pYou have been removed from an event! See the event details below:</p>
+            <p>Event: ${foundEvent.name}</p>
+            <p>Description: ${foundEvent.description}</p>
+            <p>Location: ${foundEvent.location}</p>
+            <p>Date: ${foundEvent.date}</p>
+            <p>Kindly reach out to the orgnizers to be added again!</p>
+        `
+        const emailInfo = await emailSender("Event Managent - You have been removed from an event", htmlMessage, newUser.email);
+
         res.json({
-            message: "Attendee successfully removed from event"
+            message: "Attendee successfully removed from event",
+            emailInfo : emailInfo.length ? "Removal Notice email sent!" : "Problem sending email. Kindly contact admin",
         });
     } catch (error) {
         console.log(error);

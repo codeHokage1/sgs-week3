@@ -23,10 +23,10 @@ exports.registerUser = async(req, res) => {
         <h1>Welcome ${newUser.email}!</h1>
         <p>This is the SGS Week 3 Task on Event Management API</p>
         `
-        const emailInfo = emailSender(htmlMessage, newUser.email);
+        const emailInfo = await emailSender('SGS - Event Management API', htmlMessage, newUser.email);
         res.status(201).json({
             message: 'User created successfully',
-            emailInfo,
+            emailInfo : emailInfo.length ? "Welcome email sent!" : "Problem sending email. Kindly contact admin",
             newUser
         });
 
