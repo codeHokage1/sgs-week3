@@ -6,11 +6,18 @@ This API allows users to manage events and events' attendees. As a user of the A
 4. Edit the details of the attendees of any event
 5. Delete the details of the attendees of any event
 
+- Link to deployed API :link: : https://event-mgmt.onrender.com/
+- Postman Published Documentation :link: : https://documenter.getpostman.com/view/23438041/2s93JwM1er
+  
+- Mailtrap.io Login details:
+  - email: codeHokage1@gmail.com
+  - password: AbdullahDev
+
 ## Requirements Analysis
 ### Entities
 1. User - This is the event manager. A User would have a name, email and password
 2. Event - This si the event that is being created, modified or deleted. The details of the event would include its name, date, location, description, number of atendees amongst others
-3. Attendee - This is the attendeee of a particular event. An Attendee would have a name, email and a list of the events that they are attending
+3. Attendee - This is the attendeee of a particular event. An Attendee would have a name, email and a list of the events that they are attending. Each attendee wil get an email when they are added or removed from an event
 
 ### Entities' Relationships
 1. A User can create many events
@@ -134,7 +141,8 @@ GET /api/v1/attendees   - Get all attendees create by a user with a list of even
 ```
 
 ## How to Use:
-
+1. Visit the link: https://event-mgmt.onrender.com/
+2. Use the routes(/path) as stipulated above, accordingly
 
 ## Technologies Used:
 1. MongoDB & Mongoose
@@ -144,3 +152,5 @@ GET /api/v1/attendees   - Get all attendees create by a user with a list of even
 5. Cookie Parser
 6. Bcrypt
 7. Nodemon
+8. Nodemailer
+9. Mailtrap.io
