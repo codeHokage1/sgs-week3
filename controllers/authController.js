@@ -1,3 +1,5 @@
+const validator = require('email-validator');
+
 const User = require('../models/User');
 const emailSender = require('../config/emailConfig');
 
@@ -9,6 +11,9 @@ exports.registerUser = async(req, res) => {
     const {email, password} = req.body;
     if(!email || !password) {
         return res.status(400).json({error: 'Please provide email and password'});
+    }
+    if(!validator.validate(email)){
+        return res.status(400).json({error: 'Please enter a valid email address'});
     }
 
     try {
