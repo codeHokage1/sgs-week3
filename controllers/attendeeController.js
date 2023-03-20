@@ -186,7 +186,7 @@ exports.deleteOneAttendeeFromOneEvent = async(req, res) => {
         }
 
         //delete attendee from that event
-        foundAttendee.eventsIds = foundAttendee.eventsIds.map(oneEventId => oneEventId !== eventId)
+        foundAttendee.eventsIds = foundAttendee.eventsIds.filter(oneEventId => oneEventId !== eventId)
         foundAttendee.save();
 
         // decrease the attendees count in event
