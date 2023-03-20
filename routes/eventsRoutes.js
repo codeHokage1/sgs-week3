@@ -19,5 +19,7 @@ eventRouter
         .put('/:eventId/attendees/:attendeeId', authorizeUser, attendeeController.editOneAttendeeForOneEvent)
         .delete('/:eventId/attendees/:attendeeId', authorizeUser, attendeeController.deleteOneAttendeeFromOneEvent)
 
+        .delete('/:eventId', authorizeUser, eventsController.deleteEvent)
+
 
 module.exports = eventRouter;

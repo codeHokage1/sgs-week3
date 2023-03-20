@@ -60,7 +60,7 @@ exports.loginUser = async(req, res) => {
         }
 
         const authToken = jwt.sign(
-            { email: foundUser.email },
+            { email: foundUser.email, role: foundUser.role },
             process.env.AUTH_SECRET_KEY,
             { expiresIn: 3600 * 60 }
         )

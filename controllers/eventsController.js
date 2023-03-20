@@ -83,3 +83,7 @@ exports.getOneEvent = async (req, res) => {
         res.status(500).json({error: error.message});
     }
 }
+
+exports.deleteEvent = async(req, res)=> {
+    res.send('delete an event')
+}
