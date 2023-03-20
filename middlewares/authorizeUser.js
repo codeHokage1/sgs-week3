@@ -23,10 +23,15 @@ const authorizeUser = async (req, res, next) => {
                 try {
                     const foundEvent  = await Event.findOne({_id: eventId});
 
-                    //confirm if the logged in user is the creator of the event
-                    if(foundEvent.isCreatedBy !== decoded.email) return res.status(401).json({
-                        message: "Not authorized. Login as the event creator to continue"
-                    })
+                    //confirm if the logged in user is the creator of the event or is an admin
+                    if(decoded.role === 'admin' || foundEvent.isCreatedBy === decoded.email) {
+                        next();
+                    }
+                    else{
+                        return res.status(401).json({
+                            message: "Not authorized. Login as the event creator (or Admin) to continue"
+                        })
+                    }
                 } catch (error) {
                     console.log(error);
                     return res.status(500).json({error: error.message});
