@@ -28,13 +28,13 @@ exports.createAttendeeForEvent = async (req, res) => {
         const foundAttendee = await Attendee.findOne({email});
         if(foundAttendee){
             // add the current event id to its event Ids array
-            console.log()
+
             foundAttendee.eventsIds.push(req.params.eventId)
             foundAttendee.save();
 
             const htmlMessage = `
                 <h1>Hey ${foundAttendee.name}!</h1>
-                <pYou have been added an event! See the event details below: </p>
+                <p>You have been added an event! See the event details below: </p>
                 <p>Event: ${foundEvent.name}</p>
                 <p>Description: ${foundEvent.description}</p>
                 <p>Location: ${foundEvent.location}</p>
@@ -64,7 +64,7 @@ exports.createAttendeeForEvent = async (req, res) => {
 
         const htmlMessage = `
             <h1>Hey ${newAttendee.name}!</h1>
-            <pYou have been added an event! See the event details below:</p>
+            <p>You have been added an event! See the event details below:</p>
             <p>Event: ${foundEvent.name}</p>
             <p>Description: ${foundEvent.description}</p>
             <p>Location: ${foundEvent.location}</p>
@@ -93,11 +93,14 @@ exports.getAttendeesOfOneEvent = async (req, res) => {
 
         // get all attendeess
         const allAttendees = await Attendee.find({});
+        const releventAttendees = allAttendees.filter(attendee => attendee.eventsIds.includes(foundEvent._id))
 
         res.json({
-            event: foundEvent.name,
-            attendees: allAttendees.filter(attendee => attendee.eventsIds.includes(foundEvent._id))
-
+            eventId: foundEvent._id,
+            eventName: foundEvent.name,
+            eventDate: foundEvent.date,
+            isDone: foundEvent.isDone,
+            attendees: releventAttendees
         })       
     } catch (error) {
         console.log(error);
@@ -123,7 +126,10 @@ exports.getOneAttendeeInOneEvent = async (req, res) => {
         }
 
         res.json({
-            event: foundEvent.name,
+            eventId: foundEvent._id,
+            eventName: foundEvent.name,
+            eventDate: foundEvent.date,
+            isDone: foundEvent.isDone,
             attendee: foundAttendee
         })
 
@@ -189,7 +195,7 @@ exports.deleteOneAttendeeFromOneEvent = async(req, res) => {
 
         const htmlMessage = `
             <h1>Hey ${foundAttendee.name}!</h1>
-            <pYou have been removed from an event! See the event details below:</p>
+            <p>You have been removed from an event! See the event details below:</p>
             <p>Event: ${foundEvent.name}</p>
             <p>Description: ${foundEvent.description}</p>
             <p>Location: ${foundEvent.location}</p>
