@@ -1,6 +1,9 @@
 const Event = require('../models/Event');
 const Attendee = require('../models/Attendee');
 
+const jwt = require('jsonwebtoken');
+
+
 exports.createEvent = async (req, res) => {
     const {name, date, location, description} = req.body;
     if(!name || !date || !location || !description){
@@ -8,7 +11,25 @@ exports.createEvent = async (req, res) => {
     }
 
     try {
-        const newEvent = await Event.create({name, date, location, description});
+        // get the logged in user and set user as creator of event
+        const authToken = req.headers.authorization.split(' ')[1];
+        let creatorEmail = '';
+        jwt.verify(
+            authToken,
+            process.env.AUTH_SECRET_KEY,
+            async (err, decoded) => {
+                if (err) {
+                    if(err.message === "invalid signature") return res.status(403).json({error: "Access token is incorrect"});
+    
+                    if(err.message === "jwt expired") return res.status(403).json({error: "Access Token Expired. Kindly login again"});
+    
+                    return res.status(403).json({error: err.message});
+                }
+                console.log("From the model: ", decoded);
+                creatorEmail = decoded.email;
+            }
+        )
+        const newEvent = await Event.create({name, date, location, description, isCreatedBy: creatorEmail});
         res.status(201).json({"message": "Event created successfully", event: {...newEvent._doc, attendees: []}});
     } catch (error) {
         console.log(error);
