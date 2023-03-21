@@ -85,5 +85,28 @@ exports.getOneEvent = async (req, res) => {
 }
 
 exports.deleteEvent = async(req, res)=> {
-    res.send('delete an event')
+    try {
+         //find the event
+         const foundEvent = await Event.findOne({_id: req.params.eventId});
+         if(!foundEvent) return res.status(404).json({message: `Event with id '${req.params.eventId}' not found`});
+
+        let attendees = await Attendee.find({});
+        console.log("original: ", attendees)        
+
+        const deleted = await Event.findOneAndDelete({_id: foundEvent._id});
+
+        //confirm if any attendess is attending that event
+        // let releventAttendees = attendees.filter(attendee => attendee.eventsIds.includes(req.params.eventId));
+        // console.log(releventAttendees);
+        // if(releventAttendees.length){
+        //     attendees = attendees.filter(attendee => attendee.eventsIds.includes(req.params.eventId) ? attendee.eventsIds.filter(eventId => eventId !== req.params.eventId) : null);
+        //     console.log("new: ", attendees)
+        //     // attendees.save();
+        // }
+
+        res.status(201).json({message: "Event successfully deleted", deleted});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
 }
