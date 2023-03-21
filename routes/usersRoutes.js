@@ -1,12 +1,12 @@
 const express = require('express');
 const userRoutes = express.Router();
-
+const adminOnly = require('../middlewares/adminOnly')
 const usersControllers = require('../controllers/usersControllers')
 
 userRoutes
-        .get('/', usersControllers.getAllUsers)
+        .get('/', adminOnly, usersControllers.getAllUsers)
         // .get('/:userId', usersControllers.getOneUser)
-        .delete('/:userId', usersControllers.deleteOneUser)
+        .delete('/:userId', adminOnly, usersControllers.deleteOneUser)
 
 
 module.exports = userRoutes;

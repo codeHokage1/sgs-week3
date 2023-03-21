@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 const attendeesRoutes = require('./routes/attendeesRoutes');
 const eventsRoutes = require('./routes/eventsRoutes');
-const userRoutes = require('./routes/usersRoutes');
+const usersRoutes = require('./routes/usersRoutes');
 const connectDB = require('./config/dbConfig');
 const authenticate = require('./middlewares/authenticate');
 
@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/events', authenticate, eventsRoutes);
 app.use('/api/v1/attendees', authenticate, attendeesRoutes);
-app.use('/api/v1/users', attendeesRoutes);
+app.use('/api/v1/users', authenticate, usersRoutes);
 
 
 
