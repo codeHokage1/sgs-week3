@@ -5,10 +5,10 @@ const attendeesRoutes = express.Router();
 const attendeeController = require('../controllers/attendeeController');
 
 // import middleware
-const authorizeUser = require('../middlewares/authorizeUser');
+const adminOnly = require('../middlewares/adminOnly');
 
 
 attendeesRoutes
-        .get('/', authorizeUser, attendeeController.getAllAttendees)
+        .get('/', adminOnly, attendeeController.getAllAttendees)
 
 module.exports = attendeesRoutes;
