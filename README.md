@@ -154,3 +154,4 @@ GET /api/v1/attendees   - Get all attendees create by a user with a list of even
 7. Nodemon
 8. Nodemailer
 9. Mailtrap.io
+10. Email-Validator
