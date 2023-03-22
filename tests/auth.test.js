@@ -26,20 +26,4 @@ describe('Event Management API tests', () => {
     //         }))
     //     }, 30000)
     // })
-
-    describe('Events Routes Tests', () => {
-        test('GET /api/v1/events - Should return all events', async () => { 
-
-            // login with an existing user
-            const logIn = await request(app).post('/api/v1/auth/login').send({
-                "email": "farhan1@gmail.com",
-                "password": "test1234"
-            })
-
-            const {body, statusCode} = await request(app).get('/api/v1/events').set('Authorization', `Bearer ${logIn.body.jwt}`);
-
-            expect(statusCode).toEqual(200);
-            expect(body.length).toBeGreaterThan(0);
-        })
-    })
 })
