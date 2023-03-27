@@ -38,8 +38,8 @@ describe('Events Routes Tests', () => {
         const {body, statusCode} = await request(app).get(`/api/v1/events/${response.body.event._id}`).set('Authorization', `Bearer ${logIn.body.jwt}`);
 
         const deletResponse = await request(app).delete(`/api/v1/events/${response.body.event._id}`).set('Authorization', `Bearer ${logIn.body.jwt}`);
-
         expect(statusCode).toEqual(200);
+
         expect(body).toEqual(expect.any(Object));
     })
 })
