@@ -8,10 +8,6 @@ This API allows users to manage events and events' attendees. As a user of the A
 
 - Link to deployed API :link: : https://event-mgmt.onrender.com/
 - Postman Published Documentation :link: : https://documenter.getpostman.com/view/23438041/2s93JwM1er
-  
-- Mailtrap.io Login details:
-  - email: codehokage1@gmail.com
-  - password: FarhanDev
 
 ## Requirements Analysis
 ### Entities
